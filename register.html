@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration - Cancer Risk App</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial;
+        }
+        h1 {
+            color: darkblue;
+            text-align: center;
+        }
+        form {
+            background-color: white;
+            width: 300px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid gray;
+            border-radius: 8px;
+        }
+        input {
+            width: 95%;
+            padding: 5px;
+            margin: 5px 0 2px 0;
+        }
+        button {
+            background-color: darkblue;
+            color: white;
+            padding: 8px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4169e1;
+        }
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 8px;
+            margin-top: -2px;
+        }
+        .other-option {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register to Get Your Health ID</h1>
+    <form method="post">
+        <label>Username:</label><br>
+        <input type="text" name="username" required value="{{ form.username if form and form.username }}">
+        {% if errors.username %}
+            <div class="error">{{ errors.username }}</div>
+        {% endif %}
+
+        <label>Age:</label><br>
+        <input type="number" name="age" required value="{{ form.age if form and form.age }}">
+        {% if errors.age %}
+            <div class="error">{{ errors.age }}</div>
+        {% endif %}
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required value="{{ form.email if form and form.email }}">
+        {% if errors.email %}
+            <div class="error">{{ errors.email }}</div>
+        {% endif %}
+
+        <label>Phone Number:</label><br>
+        <input type="text" name="phone" required value="{{ form.phone if form and form.phone }}">
+        {% if errors.phone %}
+            <div class="error">{{ errors.phone }}</div>
+        {% endif %}
+
+        <label>Password:</label><br>
+        <input type="password" name="password" required>
+        {% if errors.password %}
+            <div class="error">{{ errors.password }}</div>
+        {% endif %}
+
+        <button type="submit">Register</button>
+    </form>
+    <div class="other-option">
+        <span>Or do you want to <a href="/login">login?</a></span>
+    </div>
+</body>
+</html>

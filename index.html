@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cancer Risk Predictor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        fieldset { margin-bottom: 20px; }
+        label { display: block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h2>Welcome! Your Health ID: {{ health_id }}</h2>
+    <form action="/predict" method="post">
+        <fieldset>
+            <legend>Demographics</legend>
+            <label>
+                Age:
+                <input type="number" name="age" min="0" max="125" value="0" required/>
+            </label>
+            <label>
+                Gender:
+                <select name="gender" required>
+                    {% for gender in gender_options %}
+                        <option value="{{ gender }}">{{ gender }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Smoking History:
+                <select name="smoking_history" required>
+                    {% for smoke in smoking_options %}
+                        <option value="{{ smoke }}">{{ smoke }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Family History of Cancer:
+                <select name="family_history" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </label>
+        </fieldset>
+
+        {% for category, symptoms in symptom_groups.items() %}
+        <fieldset>
+            <legend>{{ category }} Symptoms</legend>
+            {% for symptom in symptoms %}
+                <label>
+                    <input type="checkbox" name="{{ symptom }}" />
+                    {{ symptom|replace('_greater_than_', ' greater than ')|replace('_', ' ') }}
+                </label>
+            {% endfor %}
+        </fieldset>
+        {% endfor %}
+
+        <button type="submit">Calculate Risk</button>
+    </form>
+    <p><a href="/logout">Logout</a></p>
+    <p><a href="/database">View Database Tables</a></p>
+</body>
+</html>

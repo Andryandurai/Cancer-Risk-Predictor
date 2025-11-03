@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database Tables - Cancer Risk App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 40px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        h2 { margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <h1>Database Tables</h1>
+
+    <h2>Users</h2>
+    <table>
+        <tr>
+            <th>ID</th><th>Username</th><th>Age</th><th>Email</th><th>Phone</th><th>Health ID</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td><td>{{ user.username }}</td><td>{{ user.age }}</td>
+            <td>{{ user.email }}</td><td>{{ user.phone }}</td><td>{{ "%05d"|format(user.health_id) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Symptoms</h2>
+    <table>
+        <tr><th>ID</th><th>Symptom Name</th><th>Category</th></tr>
+        {% for symptom in symptoms %}
+        <tr>
+            <td>{{ symptom.id }}</td><td>{{ symptom.symptom_name|replace('_greater_than_', ' greater than ')|replace('_', ' ') }}</td><td>{{ symptom.category }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>User Symptoms </h2>
+    <table>
+        <tr><th>ID</th><th>Health ID</th><th>Username</th><th>Lung Cancer Symptoms</th><th>Breast Cancer Symptoms</th><th>Skin Cancer Symptoms</th><th>Kidney Cancer Symptoms</th></tr>
+        {% for us in user_symptoms %}
+        <tr>
+            <td>{{ us.id }}</td><td>{{ "%05d"|format(us.user.health_id) }}</td><td>{{ us.user.username }}</td>
+            <td>{{ us.general_symptoms|replace('_greater_than_', ' greater than ')|replace('_', ' ') }}</td>
+            <td>{{ us.breast_symptoms|replace('_greater_than_', ' greater than ')|replace('_', ' ') }}</td>
+            <td>{{ us.skin_symptoms|replace('_greater_than_', ' greater than ')|replace('_', ' ') }}</td>
+            <td>{{ us.kidney_symptoms|replace('_greater_than_', ' greater than ')|replace('_', ' ') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Risk Results</h2>
+    <table>
+        <tr><th>ID</th><th>Health ID</th><th>Username</th><th>Risk Percentage</th><th>Risk Level</th><th>Recommendation</th><th>Date</th></tr>
+        {% for rr in risk_results %}
+        <tr>
+            <td>{{ rr.id }}</td><td>{{ "%05d"|format(rr.user.health_id) }}</td><td>{{ rr.user.username }}</td>
+            <td>{{ "%.2f"|format(rr.risk_percentage) }}%</td><td>{{ rr.risk_level }}</td><td>{{ rr.recommendation }}</td><td>{{ rr.date.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="/">Back to Home</a></p>
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>
